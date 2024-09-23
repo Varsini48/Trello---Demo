@@ -233,4 +233,81 @@ where o.OrderDate between '2024-09-10' and '2024-09-15';
 
 
 -- TASK 4
+use techshop;
+
+-- 1
+
+select customers.firstname, customers.lastname
+from customers
+left join orders 
+on customers.customerid=orders.customerid
+where orders.orderid is NULL;
+
+ -- 2 
+ 
+ select sum(quantitystock)as products_available from inventory;
+ 
+ -- 3 
+ 
+ select sum(totalamount) as revenue_generated from orders;
+ 
+ -- 4 
+ 
+select p.productname, avg(od.quantity) 
+from product p
+join orderdetails od on p.productid=od.productid
+where p.productname='mobile';
+
+-- 5 
+
+select customers.customerid, customers.firstname, sum(orders.totalamount) as total_revenue
+from customers 
+join orders  
+on customers.customerid=orders.customerid
+where customers.customerid = '7';
+
+-- 6 
+
+select c.firstname, count(o.orderid) as ordersplaced
+from customers c 
+join orders o 
+on c.customerid=o.customerid
+group by c.customerid
+order by ordersplaced desc;
+
+-- 7 
+
+select p.productname, sum(od.quantity) as tot_quan
+from product p
+join orderdetails od 
+on p.productid=od.productid
+group by p.productid
+order by tot_quan desc
+limit 1;
+
+-- 8 
+
+select c.firstname, sum(o.totalamount) as high_tot_rev
+from customers c
+join orders o
+on c.customerid=o.customerid
+group by c.customerid
+order by high_tot_rev desc
+limit 1;
+
+-- 9 
+
+select c.firstname, sum(o.totalamount)/count(o.orderid) as avg_order_value
+from customers c
+join orders o 
+on c.customerid = o.customerid
+group by c.customerid;
+
+-- 10 
+
+select c.firstname, count(o.orderid)
+from customers c
+join orders o 
+on c.customerid=o.customerid
+group by c.customerid;
 
