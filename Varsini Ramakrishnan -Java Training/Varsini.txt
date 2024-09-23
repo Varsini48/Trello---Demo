@@ -1,1 +1,3 @@
-Varsini
+git add .
+git commit -m 'newfile'
+git push origin
